@@ -53,6 +53,11 @@ rebuild: clean build/codegen all
 webconsole:
 	$(GO) generate $(IMMUDB_BUILD_TAGS) ./webconsole
 
+# To be called manually to update the default webconsole
+.PHONY: webconsole/default
+webconsole/default:
+	$(GO) generate ./webconsole
+
 .PHONY: immuclient
 immuclient:
 	$(GO) build -v -ldflags '$(V_LDFLAGS_COMMON)' ./cmd/immuclient
