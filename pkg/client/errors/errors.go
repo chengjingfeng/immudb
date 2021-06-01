@@ -21,19 +21,19 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func DefaultImmuError() *ImmuError {
-	return &ImmuError{
+func DefaultImmuError() *immuError {
+	return &immuError{
 		msg: "generic error",
 	}
 }
 
-func New(message string) *ImmuError {
-	return &ImmuError{
+func New(message string) *immuError {
+	return &immuError{
 		msg: message,
 	}
 }
 
-type ImmuError struct {
+type immuError struct {
 	cause      string
 	code       string
 	msg        string
@@ -41,7 +41,7 @@ type ImmuError struct {
 	stack      string
 }
 
-func FromError(err error) *ImmuError {
+func FromError(err error) ImmuError {
 	if err == nil {
 		return nil
 	}
@@ -61,50 +61,58 @@ func FromError(err error) *ImmuError {
 		}
 		return ie
 	}
-	return DefaultImmuError()
+	return DefaultImmuError().WithMessage(err.Error())
 }
 
-func (f *ImmuError) Error() string {
+type ImmuError interface {
+	Error() string
+	Cause() string
+	Stack() string
+	Code() string
+	RetryDelay() int32
+}
+
+func (f *immuError) Error() string {
 	return f.msg
 }
 
-func (f *ImmuError) Cause() string {
+func (f *immuError) Cause() string {
 	return f.cause
 }
 
-func (f *ImmuError) Stack() string {
+func (f *immuError) Stack() string {
 	return f.stack
 }
 
-func (f *ImmuError) Code() string {
+func (f *immuError) Code() string {
 	return f.code
 }
 
-func (f *ImmuError) RetryDelay() int32 {
+func (f *immuError) RetryDelay() int32 {
 	return f.retryDelay
 }
 
-func (e *ImmuError) WithMessage(message string) *ImmuError {
+func (e *immuError) WithMessage(message string) *immuError {
 	e.msg = message
 	return e
 }
 
-func (e *ImmuError) WithCause(cause string) *ImmuError {
+func (e *immuError) WithCause(cause string) *immuError {
 	e.cause = cause
 	return e
 }
 
-func (e *ImmuError) WithCode(code string) *ImmuError {
+func (e *immuError) WithCode(code string) *immuError {
 	e.code = code
 	return e
 }
 
-func (e *ImmuError) WithStack(stack string) *ImmuError {
+func (e *immuError) WithStack(stack string) *immuError {
 	e.stack = stack
 	return e
 }
 
-func (e *ImmuError) WithRetryDelay(retry int32) *ImmuError {
+func (e *immuError) WithRetryDelay(retry int32) *immuError {
 	e.retryDelay = retry
 	return e
 }

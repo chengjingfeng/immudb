@@ -77,6 +77,7 @@ func (cl *commandline) loginAndRenewClient(
 	user []byte,
 	pass []byte,
 ) (string, error) {
+	var err error
 	response, err := cl.immuClient.Login(ctx, user, pass)
 	if err != nil {
 		return "", err

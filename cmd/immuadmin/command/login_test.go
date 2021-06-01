@@ -19,6 +19,7 @@ package immuadmin
 import (
 	"bytes"
 	"context"
+	"github.com/codenotary/immudb/pkg/client/errors"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -129,7 +130,7 @@ func (c scIClientInnerMock) GetOptions() *client.Options {
 	return c.cliop
 }
 
-func (c scIClientInnerMock) Login(ctx context.Context, user []byte, pass []byte) (*schema.LoginResponse, error) {
+func (c scIClientInnerMock) Login(ctx context.Context, user []byte, pass []byte) (*schema.LoginResponse, errors.ImmuError) {
 	return &schema.LoginResponse{}, nil
 }
 

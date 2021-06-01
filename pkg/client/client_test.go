@@ -516,7 +516,7 @@ func TestImmuClientDisconnect(t *testing.T) {
 	require.Equal(t, ErrNotConnected, client.CleanIndex(ctx, &emptypb.Empty{}))
 
 	_, err = client.Login(context.TODO(), []byte("user"), []byte("passwd"))
-	require.Equal(t, ErrNotConnected, err)
+	require.Equal(t, ErrNotConnected.Error(), err.Error())
 
 	require.Equal(t, ErrNotConnected, client.Logout(context.TODO()))
 

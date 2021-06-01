@@ -358,6 +358,7 @@ func TestDefaultAuditorRunOnDb(t *testing.T) {
 	cliopt.DialOptions = &dialOptions
 
 	cli, _ := client.NewImmuClient(cliopt)
+	var err error
 	lresp, err := cli.Login(ctx, []byte("immudb"), []byte("immudb"))
 	require.NoError(t, err)
 
@@ -421,6 +422,7 @@ func TestRepeatedAuditorRunOnDb(t *testing.T) {
 	cliopt.DialOptions = &dialOptions
 
 	cli, _ := client.NewImmuClient(cliopt)
+	var err error
 	lresp, err := cli.Login(ctx, []byte("immudb"), []byte("immudb"))
 	require.NoError(t, err)
 
@@ -507,6 +509,7 @@ func TestDefaultAuditorRunOnDbWithSignature(t *testing.T) {
 	cliopt.DialOptions = &dialOptions
 
 	cli, _ := client.NewImmuClient(cliopt)
+	var err error
 	lresp, err := cli.Login(ctx, []byte("immudb"), []byte("immudb"))
 	require.NoError(t, err)
 

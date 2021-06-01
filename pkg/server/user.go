@@ -23,7 +23,7 @@ func (s *ImmuServer) Login(ctx context.Context, r *schema.LoginRequest) (*schema
 
 	u, err := s.getValidatedUser(r.User, r.Password)
 	if err != nil {
-		return nil, errors.Wrap(err, "invalid user name or password").WithCode(errors.InvalidCredentials).WithRetryDelay(500)
+		return nil, errors.Wrap(err, "invalid user name or password").WithCode(errors.InvalidCredentials)
 	}
 
 	if !u.Active {
